@@ -28,6 +28,8 @@ namespace calculator
         private void Button_Click(object sender, RoutedEventArgs e)
         {
          
+            //Конструкция для вывода в word, сложная и непонятная
+
             MainWindow main = new MainWindow();
             Word._Application word_app = new Word.ApplicationClass();
             word_app.Visible = true;
@@ -50,7 +52,8 @@ namespace calculator
             int[] hpA = new int[countTeamA];
             int[] forceA = new int[countTeamA];
             int[] protectA = new int[countTeamA];
-            hpA[0] = Convert.ToInt32(P1H.Text);
+            //заполнение массивов стат персонажей из текстбоксов
+            hpA[0] = Convert.ToInt32(P1H.Text); //конвертируем строку в int переменную и добавляем в ячейук массива
             forceA[0] = Convert.ToInt32(P1A.Text);
             protectA[0] = Convert.ToInt32(P1P.Text);
 
@@ -83,22 +86,23 @@ namespace calculator
             EnemyStats(ref hpB, ref forceB, ref protectB);
             while (teamARandomKol < 23)
             {
-                para.Range.Text = "Статы игрока";
+                //вывод данных о игроках в word
+                para.Range.Text = "Статы игрока"; //заголовок
                 object style_name = "Заголовок 1";
                 para.Range.set_Style(ref style_name);
                 para.Range.InsertParagraphAfter();
 
-                for (int i = 0; i < countTeamA; i++)
+                for (int i = 0; i < countTeamA; i++) //цикл чтобы пробежаться по каждому члену команды
                 {
                     
 
-                    para.Range.Text = Convert.ToString(hpA[i]) + $" - Здоровье игрока {i+1}";
+                    para.Range.Text = Convert.ToString(hpA[i]) + $" - Здоровье игрока № {i+1}"; //помещаем текст в ворд, конвертируя ячейку массива в строку и добавляя обычную строку, i + 1 потому что в массиве счет с нуля
                     para.Range.InsertParagraphAfter();
 
-                    para.Range.Text = Convert.ToString(forceA[i]) + $" - Атака игрока {i + 1}"; ;              
+                    para.Range.Text = Convert.ToString(forceA[i]) + $" - Атака игрока № {i + 1}"; ;              
                     para.Range.InsertParagraphAfter();
 
-                    para.Range.Text = Convert.ToString(protectA[i]) + $" - Защита игрока {i + 1}";
+                    para.Range.Text = Convert.ToString(protectA[i]) + $" - Защита игрока № {i + 1}";
                     para.Range.InsertParagraphAfter();
                 }
                 teamBRandomKol = 0;
@@ -110,23 +114,23 @@ namespace calculator
                 while (globalWinsB < 30 && teamBRandomKol < 719)
                 {
                    
-
+                    //вывод данных о пративниках в word
                     para.Range.Text = "Статы Моба";
                     object style_name1 = "Заголовок 1";
                     para.Range.set_Style(ref style_name1);
                     para.Range.InsertParagraphAfter();
 
-                    for (int i = 0; i < countTeamB; i++)
+                    for (int i = 0; i < countTeamB; i++) //аналогично как сверху
                     {
 
 
-                        para.Range.Text = Convert.ToString(hpB[i]) + $" - Здоровье моба {i + 1}";
+                        para.Range.Text = Convert.ToString(hpB[i]) + $" - Здоровье моба № {i + 1}"; 
                         para.Range.InsertParagraphAfter();
 
-                        para.Range.Text = Convert.ToString(forceB[i]) + $" - Атака моба {i + 1}"; ;
+                        para.Range.Text = Convert.ToString(forceB[i]) + $" - Атака моба № {i + 1}"; ;
                         para.Range.InsertParagraphAfter();
 
-                        para.Range.Text = Convert.ToString(protectB[i]) + $" - Защита моба {i + 1}";
+                        para.Range.Text = Convert.ToString(protectB[i]) + $" - Защита моба № {i + 1}";
                         para.Range.InsertParagraphAfter();
                     }
 
@@ -236,23 +240,34 @@ namespace calculator
                     para.Range.set_Style(ref style_name2);
                     para.Range.InsertParagraphAfter();
 
-                    TeamARandom(ref teamARandomKol, ref hpA, ref forceA, ref protectA, trueHpA, trueForceA, trueProtectA);
 
+                    TeamARandom(ref teamARandomKol, ref hpA, ref forceA, ref protectA, trueHpA, trueForceA, trueProtectA);
                 }
-                
+               
                 TeamBRandom(ref teamBRandomKol, ref hpB, ref forceB, ref protectB);
+
 
             }
             // Console.WriteLine(globalWinsA);
 
+            //путь где будет создан файл, часть пути из текстбокса
+            try
+            {
+                int g = 1; //переменная для файлов, чтобы каждый заход программы файл назывался по разному
+                word_doc.SaveAs2($@"{Way.Text}\Result{g}.doc"); // путь к файлу, way.text это текстбокс откуда берется информация о пути
+                // word_doc.SaveAs2($@"D:\Result{g}.doc");
 
-            word_doc.SaveAs2(@"D:\Test.doc");
-
-            object save_changes = false;
-            word_doc.Close(ref save_changes, ref missing, ref missing);
-            word_app.Quit(ref save_changes, ref missing, ref missing);
-            MessageBox.Show("its work");
-
+                object save_changes = false; //хз че это но надо :)
+                word_doc.Close(ref save_changes, ref missing, ref missing); //закрытия потока и документа
+                word_app.Quit(ref save_changes, ref missing, ref missing);
+                MessageBox.Show("Done!"); //сообщение о завершении работы
+                g++; //меняем значение переменной для файла
+            }
+           
+            catch
+            {
+                MessageBox.Show("Ошибка. Неверно указан путь"); //сообщение об ошибке если путь неверный
+            }
             
         }
 
