@@ -236,11 +236,11 @@ namespace calculator
                     para.Range.set_Style(ref style_name2);
                     para.Range.InsertParagraphAfter();
 
-                   
-                    TeamBRandom(ref teamBRandomKol, ref hpB, ref forceB, ref protectB);
-                }
-                TeamARandom(ref teamARandomKol, ref hpA, ref forceA, ref protectA, trueHpA, trueForceA, trueProtectA);
+                    TeamARandom(ref teamARandomKol, ref hpA, ref forceA, ref protectA, trueHpA, trueForceA, trueProtectA);
 
+                }
+                
+                TeamBRandom(ref teamBRandomKol, ref hpB, ref forceB, ref protectB);
 
             }
             // Console.WriteLine(globalWinsA);
